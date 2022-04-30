@@ -123,8 +123,10 @@ chart_pop = chart_base.mark_geoshape().encode(
 # chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death).resolve_scale(
 #     color='independent')
 
+chart_map = alt.hconcat(background + chart_pop, background + chart_case)
+
 # st.altair_chart(chart_map, use_container_width=True)
-st.altair_chart(background + chart_pop | background + chart_case)
+st.altair_chart(chart_map)
 #selector month:
 
 
