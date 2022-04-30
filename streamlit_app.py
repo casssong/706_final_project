@@ -1,6 +1,7 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
+from vega_datasets import data
 
 alt.data_transformers.disable_max_rows()
 
@@ -42,6 +43,35 @@ death, case, vaccination, population
 3 maps, linked together, one country
 x - month
 """
+
+# Map - total cases, total deaths
+df_map = data_country.groupby(['Country', 'total_cases', 'total_deaths','population','year']).sum().reset_index()
+source = alt.topo_feature(data.world_110m.url, 'countries')
+width = 600
+height  = 300
+project = 'equirectangular'
+
+# a gray map using as the visualization background
+background = alt.Chart(source).mark_geoshape(
+    fill='#aaa',
+    stroke='white'
+).properties(
+    width=width,
+    height=height
+).project(project)
+
+selector = alt.selection_single(fields=['id'])
+
+chart_base = alt.Chart(source
+    ).properties(
+        width=width,
+        height=height
+    ).project(project
+    ).add_selection(selector
+    ).transform_lookup(
+        lookup="id",
+        from_=alt.LookupData(df_map, "country-code", ["total_cases", 'Country', 'total_deaths','population' ,'year']),
+    )
 #selector month:
 
 
