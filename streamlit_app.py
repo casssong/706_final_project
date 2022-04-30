@@ -169,10 +169,12 @@ subset = df_bar[df_bar["month"] == month]
 countries = st.multiselect('Countries', df_bar['Country'].unique())
 subset = subset[subset["Country"].isin(countries)]
 #bar plot
+base = alt.Chart(subset).transform_filter(countries)
+
 data_selection = alt.selection_single(
     fields=["Data"], bind='legend'
 )
-chart_bar = alt.Chart(subset).mark_bar().encode(
+chart_bar = base.mark_bar().encode(
     x = alt.X("Country", title='Country'),
     y = alt.Y('value:Q', title="Value"),
     color = alt.condition(data_selection, "Data", alt.value('lightgray')),
