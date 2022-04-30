@@ -45,7 +45,7 @@ x - month
 """
 
 # Map - total cases, total deaths
-df_map = data_country.groupby(['Country', 'total_cases', 'total_deaths','population','year']).sum().reset_index()
+df_map = data_country.groupby(['Country','people_vaccinated' ,'total_cases', 'total_deaths','population','year']).sum().reset_index()
 source = alt.topo_feature(data.world_110m.url, 'countries')
 width = 450
 height  = 225
