@@ -47,8 +47,8 @@ x - month
 # Map - total cases, total deaths
 df_map = data_country.groupby(['Country', 'total_cases', 'total_deaths','population','year']).sum().reset_index()
 source = alt.topo_feature(data.world_110m.url, 'countries')
-width = 300
-height  = 150
+width = 450
+height  = 225
 project = 'equirectangular'
 
 # a gray map using as the visualization background
@@ -120,10 +120,9 @@ chart_pop = chart_base.mark_geoshape().encode(
     title=f'Population Worldwide 2021'
 )
 
-# chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death).resolve_scale(
-#     color='independent')
+chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death).resolve_scale(
+    color='independent')
 
-chart_map = alt.hconcat(background + chart_pop, background + chart_case)
 
 # st.altair_chart(chart_map, use_container_width=True)
 st.altair_chart(chart_map)
