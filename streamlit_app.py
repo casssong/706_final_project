@@ -36,6 +36,10 @@ x - month
 """
 df_line = data_world.copy()
 df_line = pd.melt(df_line, id_vars=['Country','month'], value_vars=['total_cases', 'total_deaths','people_vaccinated'], var_name = "Global_data", value_name='value')
+df_line['Global_data'] = df_line['Global_data'].map({'total_cases':'Total Cases',
+                                                     'total_deaths': 'Total Deaths',
+                                                     'people_vaccinated': 'People Vaccinated'})
+
 data_selection = alt.selection_single(
     fields=["Global_data"], bind='legend'
 )
