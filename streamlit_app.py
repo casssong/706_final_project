@@ -186,4 +186,4 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
     title='comparison'
 )
 
-st.altair_chart(chart_bar)
+#st.altair_chart(chart_bar)
