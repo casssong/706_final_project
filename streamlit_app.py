@@ -43,7 +43,7 @@ death, case, vaccination, population
 3 maps, linked together, one country
 x - month
 """
-st.write("### Global View of Population, COVID-19 Cases, COVID-19 Cases and Vaccinations")
+st.write("### Global Statistics View")
 # Map - total cases, total deaths
 df_map = data_country.groupby(['Country','people_vaccinated' ,'total_cases', 'total_deaths','population','year']).sum().reset_index()
 source = alt.topo_feature(data.world_110m.url, 'countries')
