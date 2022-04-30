@@ -40,7 +40,7 @@ df_line['Global_data'] = df_line['Global_data'].map({'total_cases':'Total Cases'
                                                      'total_deaths': 'Total Deaths',
                                                      'people_vaccinated': 'People Vaccinated'})
 
-df_line['month'] = df_line['month'].map({	1 :'Janauary',
+df_line['month'] = df_line['month'].map({	1 :'January',
                                              2 :'February',
                                              3 :'March',
                                              4 :'April',
@@ -57,7 +57,7 @@ data_selection = alt.selection_single(
     fields=["Global_data"], bind='legend'
 )
 chart_line = alt.Chart(df_line).mark_line().encode(
-    x = alt.X('month:O', title='Month'),
+    x = alt.X('month:N', title='Month'),
     y = alt.Y('value:Q', title="Total Number of People"),
     color = alt.condition(data_selection, "Global_data", alt.value('lightgray'), legend=alt.Legend(title="Data Type")),
 
