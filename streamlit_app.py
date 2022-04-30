@@ -53,7 +53,7 @@ chart_line = alt.Chart(df_line).mark_line().encode(
     width=750,
     height=400
 )
-st.altair_chart(chart_line)
+#st.altair_chart(chart_line)
 
 #map countries:
 # data_country
