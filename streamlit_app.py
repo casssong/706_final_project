@@ -72,6 +72,9 @@ chart_base = alt.Chart(source
         lookup="id",
         from_=alt.LookupData(df_map, "country-code", ["total_cases", 'Country', 'total_deaths','population' ,'year']),
     )
+
+chart_base
+
 #selector month:
 
 
