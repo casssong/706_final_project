@@ -39,26 +39,12 @@ df_line = pd.melt(df_line, id_vars=['Country','month'], value_vars=['total_cases
 df_line['Global_data'] = df_line['Global_data'].map({'total_cases':'Total Cases',
                                                      'total_deaths': 'Total Deaths',
                                                      'people_vaccinated': 'People Vaccinated'})
-
-df_line['month'] = df_line['month'].map({	1 :'January',
-                                             2 :'February',
-                                             3 :'March',
-                                             4 :'April',
-                                             5 :'May',
-                                             6 :'June',
-                                             7 :'July',
-                                             8 :'August',
-                                             9 :'September',
-                                             10 :'October',
-                                             11 :'November',
-                                             12 :'December'		})
-
 data_selection = alt.selection_single(
     fields=["Global_data"], bind='legend'
 )
 chart_line = alt.Chart(df_line).mark_line().encode(
     x = alt.X('month:N', title='Month'),
-    y = alt.Y('value:Q', title="Total Number of People"),
+    y = alt.Y('value', title="Total Number of People"),
     color = alt.condition(data_selection, "Global_data", alt.value('lightgray'), legend=alt.Legend(title="Data Type")),
 
     tooltip=[alt.Tooltip("month", title="Month"), alt.Tooltip("value:Q", title='Number of People')]
