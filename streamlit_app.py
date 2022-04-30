@@ -170,11 +170,12 @@ subset = df_bar[df_bar["month"] == month]
 countries = st.multiselect('Countries', df_bar['Country'].unique())
 subset = subset[subset["Country"].isin(countries)]
 #bar plot
+
 data_selection = alt.selection_single(
     fields=["Data"], bind='legend'
 )
 chart_bar = alt.Chart(subset).mark_bar().encode(
-    x = alt.X("Country", title='Country'),
+    x = alt.X("Data", title='Data'),
     y = alt.Y('value:Q', title="Value"),
     color = alt.condition(data_selection, "Data", alt.value('lightgray')),
     column = 'Country:N',
@@ -185,4 +186,4 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
     title='comparison'
 )
 
-st.altair_chart(chart_bar, use_container_width=True)
+st.altair_chart(chart_bar)
