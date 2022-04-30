@@ -178,9 +178,15 @@ st.altair_chart(chart_map)
 
 
 #bar plot:
-df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index']]
-df_bar = df_bar.rename(columns={'stringency_index': 'policy_score'}) 
+df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index','population']]
+df_bar['policy_score'] = df_bar['stringency_index'] * 10000
 df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases', 'people_vaccinated','policy_score'], var_name = "Data", value_name='value')
+
+#df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index']]
+#df_bar = df_bar.rename(columns={'stringency_index': 'policy_score'}) 
+#df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases', 'people_vaccinated','policy_score'], var_name = "Data", value_name='value')
+
+
 #select month:
 month = st.slider('month', 1,12,4,1)
 subset = df_bar[df_bar["month"] == month]
