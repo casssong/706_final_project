@@ -47,7 +47,7 @@ chart_line = alt.Chart(df_line).mark_line().encode(
 ).add_selection(
     data_selection
 ).properties(
-    width=800,
+    width=750,
     height=400
 )
 st.altair_chart(chart_line)
