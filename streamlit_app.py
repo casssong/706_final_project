@@ -44,7 +44,7 @@ chart_line = alt.Chart(df_line).mark_line().encode(
     y = alt.Y('value', title="Total Number of People"),
     color = alt.condition(data_selection, "Global_data", alt.value('lightgray'), legend=alt.Legend(title="Data Type")),
 
-    tooltip=["month", alt.Tooltip("value", "Number of People")]
+    tooltip=["month", "value"]
 ).add_selection(
     data_selection
 ).properties(
@@ -186,4 +186,4 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
     title='comparison'
 )
 
-#st.altair_chart(chart_bar)
+st.altair_chart(chart_bar)
