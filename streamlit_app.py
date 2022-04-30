@@ -73,7 +73,59 @@ chart_base = alt.Chart(source
         from_=alt.LookupData(df_map, "country-code", ["total_cases", 'Country', 'total_deaths','population' ,'year']),
     )
 
-chart_base
+# fix the color schema so that it will not change upon user selection
+case_scale = alt.Scale(domain=[df_map['total_cases'].min(), df_map['total_cases'].max()])
+case_color = alt.Color(field="total_cases", type="quantitative", scale=case_scale)
+chart_case = chart_base.mark_geoshape().encode(
+    ######################
+    # P3.1 map visualization showing the mortality rate
+    color=case_color,
+    ######################
+    # P3.3 tooltip
+    tooltip= ['total_cases:Q', 'Country:N']
+).transform_filter(
+    selector
+).properties(
+    title=f'Total Cases Worldwide 2021'
+)
+
+# fix the color schema so that it will not change upon user selection
+death_scale = alt.Scale(domain=[df_map['total_deaths'].min(), df_map['total_deaths'].max()])
+death_color = alt.Color(field="total_deaths", type="quantitative", scale=death_scale)
+chart_death = chart_base.mark_geoshape().encode(
+    ######################
+    # P3.2 map visualization showing the mortality rate
+    color=death_color,
+    ######################
+    # P3.3 tooltip
+    tooltip= ['total_deaths:Q', 'Country:N']
+).transform_filter(
+    selector
+).properties(
+    title=f'Total Deaths Worldwide 2021'
+)
+
+pop_scale = alt.Scale(domain=[df_map['population'].min(), df_map['population'].max()])
+pop_color = alt.Color(field="population", type="quantitative", scale=pop_scale)
+chart_pop = chart_base.mark_geoshape().encode(
+    ######################
+    # P3.2 map visualization showing the mortality rate
+    color=pop_color,
+    ######################
+    # P3.3 tooltip
+    tooltip= ['population:Q', 'Country:N']
+).transform_filter(
+    selector
+).properties(
+    title=f'Population Worldwide 2021'
+)
+
+chart_map = alt.vconcat(background + chart_case, background + chart_death, background + chart_pop
+                        ).resolve_scale(
+    color='independent'
+)
+
+chart_map
 
 #selector month:
 
