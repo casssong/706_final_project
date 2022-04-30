@@ -47,8 +47,8 @@ x - month
 # Map - total cases, total deaths
 df_map = data_country.groupby(['Country', 'total_cases', 'total_deaths','population','year']).sum().reset_index()
 source = alt.topo_feature(data.world_110m.url, 'countries')
-width = 600
-height  = 300
+width = 300
+height  = 150
 project = 'equirectangular'
 
 # a gray map using as the visualization background
