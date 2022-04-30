@@ -106,37 +106,6 @@ chart_case = chart_base.mark_geoshape().encode(
     title=f'Total Cases Worldwide 2021'
 )
 
-# fix the color schema so that it will not change upon user selection
-death_scale = alt.Scale(domain=[df_map['total_deaths'].min(), df_map['total_deaths'].max()])
-death_color = alt.Color(field="total_deaths", type="quantitative", scale=death_scale, legend=alt.Legend(title="Total Death"))
-chart_death = chart_base.mark_geoshape().encode(
-    ######################
-    # P3.2 map visualization showing the mortality rate
-    color=death_color,
-    ######################
-    # P3.3 tooltip
-    tooltip= ['total_deaths:Q', 'Country:N']
-).transform_filter(
-    selector
-).properties(
-    title=f'Total Deaths Worldwide 2021'
-)
-
-pop_scale = alt.Scale(domain=[df_map['population'].min(), df_map['population'].max()])
-pop_color = alt.Color(field="population", type="quantitative", scale=pop_scale, legend=alt.Legend(title="Total Population"))
-chart_pop = chart_base.mark_geoshape().encode(
-    ######################
-    # P3.2 map visualization showing the mortality rate
-    color=pop_color,
-    ######################
-    # P3.3 tooltip
-    tooltip= ['population:Q', 'Country:N']
-).transform_filter(
-    selector
-).properties(
-    title=f'Population Worldwide 2021'
-)
-
 vac_scale = alt.Scale(domain=[df_map['people_vaccinated'].min(), df_map['people_vaccinated'].max()])
 vac_color = alt.Color(field="people_vaccinated", type="quantitative", scale=vac_scale, legend=alt.Legend(title="People Vaccinated"))
 chart_vac = chart_base.mark_geoshape().encode(
@@ -153,7 +122,7 @@ chart_vac = chart_base.mark_geoshape().encode(
 )
 
 
-chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death,background + chart_vac
+chart_map = alt.vconcat(background + chart_case, background + chart_vac
                         ).resolve_scale(
     color='independent'
 )
@@ -194,4 +163,4 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
     title='comparison'
 )
 
-#st.altair_chart(chart_bar)
+st.altair_chart(chart_bar)
