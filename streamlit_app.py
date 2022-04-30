@@ -105,7 +105,7 @@ chart_death = chart_base.mark_geoshape().encode(
     title=f'Total Deaths Worldwide 2021'
 )
 
-pop_scale = alt.Scale(domain=[df_map['population'].min(), df_map['population'].max()])
+pop_scale = alt.Scale(domain=[df_map['population'].min(), 800000])
 pop_color = alt.Color(field="population", type="quantitative", scale=pop_scale)
 chart_pop = chart_base.mark_geoshape().encode(
     ######################
