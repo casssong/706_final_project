@@ -44,7 +44,8 @@ chart_line = alt.Chart(df_line).mark_line().encode(
     y = alt.Y('value', title="Total Number of People"),
     color = alt.condition(data_selection, "Global_data", alt.value('lightgray'), legend=alt.Legend(title="Data Type")),
 
-    tooltip=["month", "value"]
+    tooltip=["month", alt.Tooltip("value:Q", title='Number of People')]
+
 ).add_selection(
     data_selection
 ).properties(
