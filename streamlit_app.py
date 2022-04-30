@@ -149,9 +149,14 @@ chart_map = alt.vconcat(background + chart_pop, background + chart_case, backgro
 # st.altair_chart(chart_map, use_container_width=True)
 st.altair_chart(chart_map)
 
-#selector month:
-
-
-
 
 #bar plot:
+df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index']]
+df_bar = df_bar.rename(columns={'stringency_index': 'policy_score'}) 
+df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases', 'people_vaccinated','policy_score'], var_name = "Data", value_name='value')
+#select month:
+month = st.slider('month', 1,12,1,1)
+subset = df_bar[df_bar["month"] == month]
+#select countries:
+countries = st.multiselect('Countries', df_bar['Country'].unique())
+subset = subset[subset["Country"].isin(countries)]
