@@ -120,12 +120,11 @@ chart_pop = chart_base.mark_geoshape().encode(
     title=f'Population Worldwide 2021'
 )
 
-chart_map = alt.vconcat(background + chart_case, background + chart_death, background + chart_pop
-                        ).resolve_scale(
-    color='independent'
-)
+chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death).resolve_scale(
+    color='independent')
 
 st.altair_chart(chart_map, use_container_width=True)
+
 #selector month:
 
 
