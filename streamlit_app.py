@@ -46,6 +46,9 @@ chart_line = alt.Chart(df_line).mark_line().encode(
     tooltip=["month", "value"]
 ).add_selection(
     data_selection
+).properties(
+    width=400,
+    height=250
 )
 st.altair_chart(chart_line)
 
