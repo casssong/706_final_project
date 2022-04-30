@@ -34,16 +34,27 @@ death/population, case/population, vaccinated/population
 3 lines, legend
 x - month
 """
-
+df_line = data_world.copy()
+df_line = pd.melt(df_line, id_vars=['Country','month'], value_vars=['total_cases', 'total_deaths','people_vaccinated'], var_name = "Global_data", value_name='value')
+data_selection = alt.selection_single(
+    fields=["Global_data"], bind='legend'
+)
+chart_line = alt.Chart(df_line).mark_line().encode(
+    x = alt.X('month:N', title='Time'),
+    y = alt.Y('value', title="Total values"),
+    color = alt.condition(data_selection, "Global_data", alt.value('lightgray')),
+    tooltip=["month", "value"]
+).add_selection(
+    data_selection
+)
+st.altair_chart(chart_line)
 
 #map countries:
-"""
-data_country
-death, case, vaccination, population
-3 maps, linked together, one country
-x - month
-"""
-st.write("### Global Statistics View")
+# data_country
+# death, case, vaccination, population
+# 3 maps, linked together, one country
+# x - month
+st.write("### Choropleth Map of Population and COVID-19 related statistics")
 # Map - total cases, total deaths
 df_map = data_country.groupby(['Country','people_vaccinated' ,'total_cases', 'total_deaths','population','year']).sum().reset_index()
 source = alt.topo_feature(data.world_110m.url, 'countries')
