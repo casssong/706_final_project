@@ -4,8 +4,6 @@ import streamlit as st
 
 alt.data_transformers.disable_max_rows()
 
-@st.cache
-
 #load data
 covid_df = pd.read_csv('processed_data.csv')
 #add country-codes
@@ -14,11 +12,11 @@ covid_df = covid_df.rename(columns = {'location':'Country'})
 covid_df = covid_df.merge(country_df[['Country','country-code']],how='left', on=['Country'])
 
 #world data
-data_world = data[data['Country']=='World']
+data_world = covid_df[covid_df['Country']=='World']
 
 #country data
 country_drop =  ['Africa', 'Asia', 'Europe', 'European Union', 'High income', 'International', 'Low income', 'Lower middle income', 'North America', 'Oceania', 'South America', 'Upper middle income', 'World']
-data_country = data.copy()
+data_country = covid_df.copy()
 data_country = data_country[~pd.DataFrame(data_country.Country.tolist()).isin(country_drop).any(1).values]
 
 #drop population < 500,000 (44)
@@ -44,7 +42,6 @@ death, case, vaccination, population
 3 maps, linked together, one country
 x - month
 """
-
 #selector month:
 
 
