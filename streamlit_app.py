@@ -200,7 +200,7 @@ data_selection = alt.selection_single(
 )
 chart_bar = alt.Chart(subset).mark_bar().encode(
     x = alt.X("Data", title='Data'),
-    y = alt.Y('value:Q', title="Value"),
+    y = alt.Y('sum(value)', title="Value"),
     color = alt.condition(data_selection, "Data", alt.value('lightgray')),
     column = 'Country:N',
     tooltip=["Country","value"]
