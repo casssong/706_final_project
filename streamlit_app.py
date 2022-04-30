@@ -75,7 +75,7 @@ chart_base = alt.Chart(source
 
 # fix the color schema so that it will not change upon user selection
 case_scale = alt.Scale(domain=[df_map['total_cases'].min(), df_map['total_cases'].max()])
-case_color = alt.Color(field="total_cases", type="quantitative", scale=case_scale)
+case_color = alt.Color(field="total_cases", type="quantitative", scale=case_scale, legend=alt.Legend(title="Total Cases"))
 chart_case = chart_base.mark_geoshape().encode(
     ######################
     # P3.1 map visualization showing the mortality rate
@@ -91,7 +91,7 @@ chart_case = chart_base.mark_geoshape().encode(
 
 # fix the color schema so that it will not change upon user selection
 death_scale = alt.Scale(domain=[df_map['total_deaths'].min(), df_map['total_deaths'].max()])
-death_color = alt.Color(field="total_deaths", type="quantitative", scale=death_scale)
+death_color = alt.Color(field="total_deaths", type="quantitative", scale=death_scale, legend=alt.Legend(title="Total Death"))
 chart_death = chart_base.mark_geoshape().encode(
     ######################
     # P3.2 map visualization showing the mortality rate
@@ -105,8 +105,8 @@ chart_death = chart_base.mark_geoshape().encode(
     title=f'Total Deaths Worldwide 2021'
 )
 
-pop_scale = alt.Scale(domain=[round(df_map['population'].min()), round(df_map['population'].max())])
-pop_color = alt.Color(field="population", type="quantitative", scale=pop_scale)
+pop_scale = alt.Scale(domain=[df_map['population'].min(), df_map['population'].max()])
+pop_color = alt.Color(field="population", type="quantitative", scale=pop_scale, legend=alt.Legend(title="Total Population"))
 chart_pop = chart_base.mark_geoshape().encode(
     ######################
     # P3.2 map visualization showing the mortality rate
