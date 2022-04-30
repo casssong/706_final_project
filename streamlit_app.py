@@ -2,6 +2,8 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+alt.data_transformers.disable_max_rows()
+
 @st.cache
 
 #load data
@@ -18,14 +20,33 @@ data_world = data[data['Country']=='World']
 country_drop =  ['Africa', 'Asia', 'Europe', 'European Union', 'High income', 'International', 'Low income', 'Lower middle income', 'North America', 'Oceania', 'South America', 'Upper middle income', 'World']
 data_country = data.copy()
 data_country = data_country[~pd.DataFrame(data_country.Country.tolist()).isin(country_drop).any(1).values]
+"""
+drop population < 500,000 (44)
+"""
+
 
 st.write("## COVID-19 cases of 2021")
 
-#line plot global: 
+#line plot global rate: 
+"""
+data_world
+death/population, case/population, vaccinated/population
+3 lines, legend
+x - month
+"""
+
+
+#map countries:
+"""
+data_country
+death, case, vaccination, population
+3 maps, linked together, one country
+x - month
+"""
 
 #selector month:
 
-#map specific countries:
 
-#
+
+
 #bar plot:
