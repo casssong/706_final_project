@@ -125,8 +125,7 @@ chart_map = alt.vconcat(background + chart_case, background + chart_death, backg
     color='independent'
 )
 
-chart_map
-
+st.altair_chart(chart_map, use_container_width=True)
 #selector month:
 
 
