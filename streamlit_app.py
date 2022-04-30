@@ -20,9 +20,10 @@ data_world = data[data['Country']=='World']
 country_drop =  ['Africa', 'Asia', 'Europe', 'European Union', 'High income', 'International', 'Low income', 'Lower middle income', 'North America', 'Oceania', 'South America', 'Upper middle income', 'World']
 data_country = data.copy()
 data_country = data_country[~pd.DataFrame(data_country.Country.tolist()).isin(country_drop).any(1).values]
-"""
-drop population < 500,000 (44)
-"""
+
+#drop population < 500,000 (44)
+drop_lowpop = data_country[data_country['population'] < 500000]['Country'].unique()
+data_country = data_country[~pd.DataFrame(data_country.Country.tolist()).isin(drop_lowpop).any(1).values]
 
 
 st.write("## COVID-19 cases of 2021")
