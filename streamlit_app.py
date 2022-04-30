@@ -43,7 +43,7 @@ death, case, vaccination, population
 3 maps, linked together, one country
 x - month
 """
-
+st.write("### Global View of Population, COVID-19 Cases, COVID-19 Cases and Vaccinations")
 # Map - total cases, total deaths
 df_map = data_country.groupby(['Country','people_vaccinated' ,'total_cases', 'total_deaths','population','year']).sum().reset_index()
 source = alt.topo_feature(data.world_110m.url, 'countries')
@@ -121,7 +121,7 @@ chart_pop = chart_base.mark_geoshape().encode(
 )
 
 vac_scale = alt.Scale(domain=[df_map['people_vaccinated'].min(), df_map['people_vaccinated'].max()])
-vac_color = alt.Color(field="people_vaccinated", type="quantitative", scale=vac_scale)
+vac_color = alt.Color(field="people_vaccinated", type="quantitative", scale=vac_scale, legend=alt.Legend(title="People Vaccinated"))
 chart_vac = chart_base.mark_geoshape().encode(
     ######################
     # P3.2 map visualization showing the mortality rate
@@ -136,7 +136,7 @@ chart_vac = chart_base.mark_geoshape().encode(
 )
 
 
-chart_map = alt.vconcat(background + chart_case, background + chart_death, background + chart_pop, background + chart_vac
+chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death,background + chart_vac
                         ).resolve_scale(
     color='independent'
 )
