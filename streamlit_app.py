@@ -19,7 +19,7 @@ country_drop =  ['Africa', 'Asia', 'Europe', 'European Union', 'High income', 'I
 data_country = data.copy()
 data_country = data_country[~pd.DataFrame(data_country.Country.tolist()).isin(country_drop).any(1).values]
 
-st.write("## COVID-19 cases from 2021 to 2022")
+st.write("## COVID-19 cases of 2021")
 
 #line plot global: 
 
