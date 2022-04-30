@@ -120,23 +120,26 @@ chart_pop = chart_base.mark_geoshape().encode(
     title=f'Population Worldwide 2021'
 )
 
-# vac_scale = alt.Scale(domain=[df_map['people_vaccinated'].min(), df_map['people_vaccinated'].max()])
-# vac_color = alt.Color(field="people_vaccinated", type="quantitative", scale=vac_scale, legend=alt.Legend(title="Total Vaccination"))
-# chart_vac = chart_base.mark_geoshape().encode(
-#     ######################
-#     # P3.2 map visualization showing the mortality rate
-#     color=vac_color,
-#     ######################
-#     # P3.3 tooltip
-#     tooltip= ['people_vaccinated:Q', 'Country:N']
-# ).transform_filter(
-#     selector
-# ).properties(
-#     title=f'Vaccination Worldwide 2021'
-# )
+vac_scale = alt.Scale(domain=[df_map['people_vaccinated'].min(), df_map['people_vaccinated'].max()])
+vac_color = alt.Color(field="people_vaccinated", type="quantitative", scale=vac_scale)
+chart_vac = chart_base.mark_geoshape().encode(
+    ######################
+    # P3.2 map visualization showing the mortality rate
+    color=vac_color,
+    ######################
+    # P3.3 tooltip
+    tooltip= ['people_vaccinated:Q', 'Country:N']
+).transform_filter(
+    selector
+).properties(
+    title=f'Vaccination Worldwide 2021'
+)
 
-chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death).resolve_scale(
-    color='independent')
+
+chart_map = alt.vconcat(background + chart_case, background + chart_death, background + chart_pop, background + chart_vac
+                        ).resolve_scale(
+    color='independent'
+)
 
 st.altair_chart(chart_map)
 
