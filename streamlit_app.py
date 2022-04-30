@@ -163,8 +163,25 @@ df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','str
 df_bar = df_bar.rename(columns={'stringency_index': 'policy_score'}) 
 df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases', 'people_vaccinated','policy_score'], var_name = "Data", value_name='value')
 #select month:
-month = st.slider('month', 1,12,1,1)
+month = st.slider('month', 1,12,4,1)
 subset = df_bar[df_bar["month"] == month]
 #select countries:
 countries = st.multiselect('Countries', df_bar['Country'].unique())
 subset = subset[subset["Country"].isin(countries)]
+#bar plot
+data_selection = alt.selection_single(
+    fields=["Data"], bind='legend'
+)
+chart_bar = alt.Chart(subset).mark_bar().encode(
+    x = alt.X("Country", title='Country'),
+    y = alt.Y('value:Q', title="Value"),
+    color = alt.condition(data_selection, "Data", alt.value('lightgray')),
+    column = 'Country:N',
+    tooltip=["Country","value"]
+).add_selection(
+    data_selection
+).properties(
+    title='comparison'
+)
+
+st.altair_chart(chart_bar, use_container_width=True)
