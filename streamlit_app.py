@@ -163,7 +163,7 @@ st.altair_chart(chart_map)
 
 #bar plot:
 df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index','population']]
-df_bar['policy_score'] = df_bar['stringency_index'] * 10000
+df_bar['policy_score'] = df_bar['stringency_index'] * 100
 df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases', 'people_vaccinated','policy_score'], var_name = "Data", value_name='value')
 
 #df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index']]
@@ -184,7 +184,7 @@ data_selection = alt.selection_single(
 )
 chart_bar = alt.Chart(subset).mark_bar().encode(
     x = alt.X("Data", title='Data'),
-    y = alt.Y('value:Q', title="Value"),
+    y = alt.Y('sum(value)', title="Value"),
     color = alt.condition(data_selection, "Data", alt.value('lightgray')),
     column = 'Country:N',
     tooltip=["Country","value"]
