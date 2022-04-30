@@ -44,7 +44,7 @@ data_selection = alt.selection_single(
 )
 chart_line = alt.Chart(df_line).mark_line().encode(
     x = alt.X('month:N', title='Month'),
-    y = alt.Y('value', title="Total Number of People"),
+    y = alt.Y('sum(value)', title="Total Number of People"),
     color = alt.condition(data_selection, "Global_data", alt.value('lightgray'), legend=alt.Legend(title="Data Type")),
     tooltip=[alt.Tooltip("month", title="Month"), alt.Tooltip("value:Q", title='Number of People')]
 ).add_selection(
@@ -53,7 +53,7 @@ chart_line = alt.Chart(df_line).mark_line().encode(
     width=750,
     height=400
 )
-#st.altair_chart(chart_line)
+st.altair_chart(chart_line)
 
 #map countries:
 # data_country
