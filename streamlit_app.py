@@ -34,21 +34,35 @@ death/population, case/population, vaccinated/population
 3 lines, legend
 x - month
 """
-
+df_line = data_world.copy()
+df_line = pd.melt(df_line, id_vars=['Country','month'], value_vars=['total_cases', 'total_deaths','people_vaccinated'], var_name = "Global_data", value_name='value')
+data_selection = alt.selection_single(
+    fields=["Global_data"], bind='legend'
+)
+chart_line = alt.Chart(df_line).mark_line().encode(
+    x = alt.X('month:N', title='Time'),
+    y = alt.Y('value', title="Total values"),
+    color = alt.condition(data_selection, "Global_data", alt.value('lightgray')),
+    tooltip=["month", "value"]
+).add_selection(
+    data_selection
+).properties(
+    width=800,
+    height=400
+)
+st.altair_chart(chart_line)
 
 #map countries:
-"""
-data_country
-death, case, vaccination, population
-3 maps, linked together, one country
-x - month
-"""
-
+# data_country
+# death, case, vaccination, population
+# 3 maps, linked together, one country
+# x - month
+st.write("### Choropleth Map of Population and COVID-19 related statistics")
 # Map - total cases, total deaths
 df_map = data_country.groupby(['Country','people_vaccinated' ,'total_cases', 'total_deaths','population','year']).sum().reset_index()
 source = alt.topo_feature(data.world_110m.url, 'countries')
-width = 450
-height  = 225
+width = 600
+height  = 300
 project = 'equirectangular'
 
 # a gray map using as the visualization background
@@ -70,7 +84,7 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df_map, "country-code", ["total_cases", 'Country', 'total_deaths','population' ,'year']),
+        from_=alt.LookupData(df_map, "country-code", ['people_vaccinated', "total_cases", 'Country', 'total_deaths','population' ,'year']),
     )
 
 # fix the color schema so that it will not change upon user selection
@@ -120,15 +134,8 @@ chart_pop = chart_base.mark_geoshape().encode(
     title=f'Population Worldwide 2021'
 )
 
-chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death).resolve_scale(
-    color='independent')
-
-
-# st.altair_chart(chart_map, use_container_width=True)
-st.altair_chart(chart_map)
-
 vac_scale = alt.Scale(domain=[df_map['people_vaccinated'].min(), df_map['people_vaccinated'].max()])
-vac_color = alt.Color(field="vaccination", type="quantitative", scale=pop_scale, legend=alt.Legend(title="Total Vaccination"))
+vac_color = alt.Color(field="people_vaccinated", type="quantitative", scale=vac_scale, legend=alt.Legend(title="People Vaccinated"))
 chart_vac = chart_base.mark_geoshape().encode(
     ######################
     # P3.2 map visualization showing the mortality rate
@@ -142,11 +149,12 @@ chart_vac = chart_base.mark_geoshape().encode(
     title=f'Vaccination Worldwide 2021'
 )
 
-chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death, background + chart_vac).resolve_scale(
-    color='independent')
 
+chart_map = alt.vconcat(background + chart_pop, background + chart_case, background + chart_death,background + chart_vac
+                        ).resolve_scale(
+    color='independent'
+)
 
-# st.altair_chart(chart_map, use_container_width=True)
 st.altair_chart(chart_map)
 
 
