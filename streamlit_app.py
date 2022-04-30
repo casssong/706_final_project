@@ -106,23 +106,24 @@ chart_case = chart_base.mark_geoshape().encode(
     title=f'Total Cases Worldwide 2021'
 )
 
-vac_scale = alt.Scale(domain=[df_map['people_vaccinated'].min(), df_map['people_vaccinated'].max()])
-vac_color = alt.Color(field="people_vaccinated", type="quantitative", scale=vac_scale, legend=alt.Legend(title="People Vaccinated"))
-chart_vac = chart_base.mark_geoshape().encode(
+# fix the color schema so that it will not change upon user selection
+death_scale = alt.Scale(domain=[df_map['total_deaths'].min(), df_map['total_deaths'].max()])
+death_color = alt.Color(field="total_deaths", type="quantitative", scale=death_scale, legend=alt.Legend(title="Total Death"))
+chart_death = chart_base.mark_geoshape().encode(
     ######################
     # P3.2 map visualization showing the mortality rate
-    color=vac_color,
+    color=death_color,
     ######################
     # P3.3 tooltip
-    tooltip= ['people_vaccinated:Q', 'Country:N']
+    tooltip= ['total_deaths:Q', 'Country:N']
 ).transform_filter(
     selector
 ).properties(
-    title=f'Vaccination Worldwide 2021'
+    title=f'Total Deaths Worldwide 2021'
 )
 
 
-chart_map = alt.vconcat(background + chart_case, background + chart_vac
+chart_map = alt.vconcat(background + chart_case, background + chart_death
                         ).resolve_scale(
     color='independent'
 )
@@ -141,7 +142,7 @@ df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases',
 
 
 #select month:
-month = st.slider('month', 1,12,4,1)
+month = st.slider('Month', 1,12,4,1)
 subset = df_bar[df_bar["month"] == month]
 #select countries:
 countries = st.multiselect('Countries', df_bar['Country'].unique())
@@ -160,7 +161,7 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
 ).add_selection(
     data_selection
 ).properties(
-    title='comparison'
+    title='Comparison Between Countries'
 )
 
 st.altair_chart(chart_bar)
