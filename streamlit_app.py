@@ -156,7 +156,7 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
     x = alt.X("Data", title='Data'),
     y = alt.Y('value', title="Value"),
     color = alt.condition(data_selection, "Data", alt.value('lightgray')),
-    column = 'Country:N',
+    column = alt.Column('Country:N', title="Column Title"),
     tooltip=["Country","value"]
 ).add_selection(
     data_selection
