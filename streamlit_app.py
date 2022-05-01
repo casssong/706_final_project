@@ -135,6 +135,9 @@ st.altair_chart(chart_map)
 df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index','population']]
 df_bar['policy_score'] = df_bar['stringency_index'] * 100000
 df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases', 'people_vaccinated','policy_score'], var_name = "Data", value_name='value')
+df_bar['Data'] = df_bar['Data'].map({'total_cases':'Total Cases',
+                                                     'total_deaths': 'Total Deaths',
+                                                     'people_vaccinated': 'People Vaccinated'})
 
 #df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index']]
 #df_bar = df_bar.rename(columns={'stringency_index': 'policy_score'}) 
