@@ -160,9 +160,9 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
 ).add_selection(
     data_selection
 ).properties(
-    title='Chart Title'
+    title=f'Policy Score {}'
 ).facet(
-    column = alt.Column('Country:N', title="Column Title")
+    column = alt.Column('Country:N')
 ).properties(
     title='Comparison Between Countries'
 )
