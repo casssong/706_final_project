@@ -161,7 +161,7 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
 ).add_selection(
     data_selection
 ).properties(
-    title=f'Policy Score'
+    title='Policy Score'
 ).facet(
     column = alt.Column('Country:N')
 ).properties(
