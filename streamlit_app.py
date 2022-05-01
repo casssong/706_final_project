@@ -151,7 +151,7 @@ subset = df_bar[df_bar["month"] == month]
 countries = st.multiselect('Countries', df_bar['Country'].unique())
 subset = subset[subset["Country"].isin(countries)]
 #bar plot
-ps = subset[subset['Data'] == 'policy_score']['value'].unique()
+ps = subset[subset['Data'] == 'policy_score']['value'].unique()[0]
 
 data_selection = alt.selection_single(
     fields=["Data"], bind='legend'
