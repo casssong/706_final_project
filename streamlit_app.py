@@ -156,10 +156,13 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
     x = alt.X("Data", title='Data'),
     y = alt.Y('sum(value)', title="Value"),
     color = alt.condition(data_selection, "Data", alt.value('lightgray')),
-    column = alt.Column('Country:N', title="Column Title"),
     tooltip=["Country","value"]
 ).add_selection(
     data_selection
+).properties(
+    title='Chart Title'
+).facet(
+    column = alt.Column('Country:N', title="Column Title")
 ).properties(
     title='Comparison Between Countries'
 )
