@@ -148,6 +148,7 @@ subset = df_bar[df_bar["month"] == month]
 countries = st.multiselect('Countries', df_bar['Country'].unique())
 subset = subset[subset["Country"].isin(countries)]
 #bar plot
+subset_ps = subset['policy_score']
 
 data_selection = alt.selection_single(
     fields=["Data"], bind='legend'
@@ -160,7 +161,7 @@ chart_bar = alt.Chart(subset).mark_bar().encode(
 ).add_selection(
     data_selection
 ).properties(
-    title=f'Policy Score {}'
+    title=f'Policy Score {subset_ps.values}'
 ).facet(
     column = alt.Column('Country:N')
 ).properties(
