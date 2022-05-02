@@ -9,6 +9,8 @@ alt.data_transformers.disable_max_rows()
 covid_df = pd.read_csv('processed_data.csv')
 #add country-codes
 country_df = pd.read_csv('https://raw.githubusercontent.com/hms-dbmi/bmi706-2022/main/cancer_data/country_codes.csv', dtype = {'conuntry-code': str})
+country_df.at[235,'Country'] = 'United States'
+
 covid_df = covid_df.rename(columns = {'location':'Country'})
 covid_df = covid_df.merge(country_df[['Country','country-code']],how='left', on=['Country'])
 
