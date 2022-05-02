@@ -133,11 +133,9 @@ st.altair_chart(chart_map)
 st.write("Comparison of Policy Score and COVID-19 statistics between different Countries ")
 #bar plot:
 df_bar = data_country[['Country','month','total_cases', 'people_vaccinated','stringency_index','population']]
-df_bar['policy_score'] = df_bar['stringency_index'] * 100
+df_bar['policy_score'] = df_bar['stringency_index'] * 1000
 df_bar = pd.melt(df_bar, id_vars=['Country','month'], value_vars=['total_cases', 'people_vaccinated','policy_score'], var_name = "Data", value_name='value')
-df_bar['Data'] = df_bar['Data'].map({'total_cases':'Total Cases',
-                                                     'policy_score': 'Policy Score',
-                                                     'people_vaccinated': 'People Vaccinated'})
+df_bar['Data'] = df_bar['Data'].map({'policy_score': 'Policy Score','total_cases':'Total Cases','people_vaccinated': 'People Vaccinated'})
 
 #select month:
 month = st.slider('Month', 1,12,4,1)
